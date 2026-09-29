@@ -1,464 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sina Yousefzadeh | Ubuntu Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Ubuntu', sans-serif;
-            overflow: hidden;
-            user-select: none;
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sina Yousefzadeh · Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#D5DCE8; --desk-ink:#16213A; --paper:#FBFAF6; --ink:#1B2338; --soft:#57617A; --line:#E3DFD3;
+  --lapis:#27479E; --saffron:#E2A72E; --teal:#12808A;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Newsreader",Georgia,"Times New Roman",serif;
+  --half:min(500px,47vw); --H:min(640px,calc(100dvh - 140px));
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--desk:#0E1526;--desk-ink:#E7ECF7}}
+:root[data-theme="dark"]{--desk:#0E1526;--desk-ink:#E7ECF7}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--desk);color:var(--desk-ink);font-family:var(--body);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:24px 0;overflow-x:hidden}
+:focus-visible{outline:3px solid var(--saffron);outline-offset:2px}
+a{color:inherit}
 
-        .ubuntu-bg {
-            background: linear-gradient(135deg, #4c1039 0%, #772953 50%, #2c001e 100%);
-            background-size: cover;
-            height: 100vh;
-            width: 100vw;
-        }
+/* the book */
+.scene{perspective:2400px;width:100%;display:flex;justify-content:center}
+.book{position:relative;width:calc(var(--half)*2);height:var(--H);min-height:440px;transform-style:preserve-3d;
+  transform:translateX(calc(var(--half)/-2));transition:transform 1s cubic-bezier(.6,.05,.2,1)}
+.book:not([data-n="0"]){transform:translateX(0)}
+.lshadow{position:absolute;left:0;top:0;width:50%;height:100%;box-shadow:0 30px 50px -20px rgba(0,0,0,.45);opacity:0;transition:opacity .8s;border-radius:6px 0 0 6px}
+.book:not([data-n="0"]) .lshadow{opacity:1}
+.base,.leaf{position:absolute;left:50%;top:0;width:50%;height:100%}
+.base{background:var(--paper);border-radius:0 6px 6px 0;box-shadow:0 30px 50px -20px rgba(0,0,0,.45)}
+.leaf{--z:calc((3 - var(--i))*2px);transform-origin:left center;transform-style:preserve-3d;
+  transform:translateZ(var(--z));transition:transform 1s cubic-bezier(.6,.05,.2,1)}
+.leaf.flipped{--z:calc(var(--i)*2px);transform:translateZ(var(--z)) rotateY(-180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;background:var(--paper);color:var(--ink)}
+.front{border-radius:0 6px 6px 0;background-image:linear-gradient(90deg,rgba(0,0,0,.16),transparent 7%)}
+.back{transform:rotateY(180deg);border-radius:6px 0 0 6px;background-image:linear-gradient(270deg,rgba(0,0,0,.16),transparent 7%)}
+.base{background-image:linear-gradient(90deg,rgba(0,0,0,.16),transparent 7%)}
 
-        .top-bar {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            height: 28px;
-            font-size: 14px;
-            z-index: 1000;
-        }
+/* page content */
+.pg{height:100%;padding:34px 30px 30px;display:flex;flex-direction:column;font-size:16.5px;line-height:1.5}
+.pg h2{font:800 30px/1.05 var(--display);letter-spacing:-.02em;margin:0 0 14px}
+.pg h3{font:800 17px var(--display);margin:0 0 4px}
+.pg p{margin:0 0 12px}
+.soft{color:var(--soft)}
+.scroll{flex:1;overflow:auto;padding-right:12px;margin-right:-6px;scrollbar-width:thin;scrollbar-color:var(--lapis) transparent}
+.scroll::-webkit-scrollbar{width:6px}
+.scroll::-webkit-scrollbar-thumb{background:var(--lapis);border-radius:3px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px;padding:0;list-style:none}
+.tags li{font:500 13.5px var(--display);padding:3px 11px;border-radius:999px;background:var(--lapis);color:#fff}
+.btn{display:inline-block;font:500 15px var(--display);text-decoration:none;padding:9px 18px;border-radius:999px;border:2px solid var(--ink);margin:0 8px 8px 0;color:var(--ink);background:none}
+.btn.main{background:var(--ink);color:var(--paper)}
 
-        .launcher {
-            background: rgba(0, 0, 0, 0.4);
-            width: 52px;
-            height: calc(100vh - 28px);
-            z-index: 900;
-            backdrop-filter: blur(5px);
-        }
+/* cover */
+.cover{background:var(--lapis)!important;color:#fff;border:0;width:100%;height:100%;text-align:left;cursor:pointer;padding:34px 30px;
+  display:flex;flex-direction:column;justify-content:space-between;font:inherit;
+  background-image:linear-gradient(90deg,rgba(0,0,0,.3),transparent 8%)!important}
+.cover h1{font:800 clamp(34px,5.4vw,56px)/.98 var(--display);letter-spacing:-.03em;margin:0 0 12px}
+.cover p{margin:0;font-size:18px;opacity:.92}
+.cover svg{width:min(60%,230px);align-self:flex-end;margin-bottom:-2px}
+.cover .open{font:500 15px var(--display);border-bottom:2px solid var(--saffron);align-self:flex-start;padding-bottom:2px}
 
-        .launcher-item {
-            width: 38px;
-            height: 38px;
-            margin: 8px auto;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            cursor: pointer;
-            position: relative;
-        }
+/* left pages */
+.avatar{width:96px;height:96px;border-radius:50%;background:var(--saffron);color:var(--ink);display:grid;place-items:center;font:800 34px var(--display);margin-bottom:18px}
+.step{display:grid;grid-template-columns:34px 1fr;gap:10px;margin-bottom:14px}
+.step b{font:800 22px var(--display);color:var(--teal)}
+.work{border-left:5px solid var(--c);padding-left:14px;margin-bottom:20px}
+.work p{margin-bottom:6px}
 
-        .launcher-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
+/* nav */
+nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:0 12px}
+nav button{font:500 15px var(--display);padding:9px 18px;border-radius:999px;border:2px solid currentColor;background:none;color:var(--desk-ink);cursor:pointer}
+nav button[aria-current="true"]{background:var(--desk-ink);color:var(--desk)}
 
-        .launcher-item.active::before {
-            content: '';
-            position: absolute;
-            left: -8px;
-            width: 3px;
-            height: 15px;
-            background: white;
-            border-radius: 0 2px 2px 0;
-        }
-
-        .window {
-            position: absolute;
-            background: #f0f0f0;
-            border-radius: 8px 8px 0 0;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            min-width: 400px;
-            min-height: 300px;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
-            z-index: 50;
-        }
-
-        .window.active {
-            display: flex;
-            z-index: 100;
-        }
-
-        .window-header {
-            background: #3d3d3d;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 10px;
-            color: #d1d1d1;
-            cursor: move;
-        }
-
-        .window-controls {
-            display: flex;
-            gap: 8px;
-        }
-
-        .control-btn {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            cursor: pointer;
-            color: #3d3d3d;
-        }
-
-        .btn-close { background: #e95420; color: white; }
-        .btn-min { background: #5e5e5e; color: white; }
-        .btn-max { background: #5e5e5e; color: white; }
-
-        .window-content {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 20px;
-            background: white;
-            color: #333;
-        }
-
-        .terminal-content {
-            background: #300a24;
-            color: #fff;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 18px;
-            background: white;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
-        }
-
-        .grid-item:hover {
-            transform: translateY(-5px);
-            transition: 0.3s;
-        }
-
-        @media (max-width: 768px) {
-            .window {
-                width: 90% !important;
-                height: 70% !important;
-                left: 5% !important;
-                top: 50px !important;
-            }
-        }
-    </style>
+@media (max-width:820px){
+  :root{--half:min(94vw,460px)}
+  .book,.book:not([data-n="0"]){transform:translateX(calc(var(--half)/-2))}
+  .lshadow{display:none}
+  .pg{padding:28px 22px 24px}
+}
+@media (prefers-reduced-motion:reduce){.book,.leaf,.lshadow{transition:none}}
+</style>
 </head>
-<body class="ubuntu-bg text-white">
+<body>
+<div class="scene">
+  <div class="book" id="book" data-n="0">
+    <div class="lshadow"></div>
 
-    <div class="top-bar fixed top-0 w-full flex items-center justify-between px-4">
-        <div class="flex items-center gap-4">
-            <span class="font-bold">Activities</span>
+    <!-- Contact (base page, last) -->
+    <section class="base" id="p3" aria-label="Contact">
+      <div class="pg">
+        <h2>Have a project in mind?</h2>
+        <div class="scroll">
+          <p>Send me the brief. I'll reply with a scope, a price and a timeline.</p>
+          <!-- EDIT: your email -->
+          <a class="btn main" href="mailto:your-email@example.com">Email me</a>
+          <a class="btn" href="https://github.com/jajoul">GitHub</a>
+          <a class="btn" href="https://jajoul.github.io">jajoul.github.io</a>
+          <h3 style="margin-top:18px">Good fits</h3>
+          <p class="soft">Business applications, custom web platforms, and Django backends with a responsive frontend.</p>
         </div>
-        <div id="clock" class="font-medium">
-            Oct 24 14:30
-        </div>
-        <div class="flex items-center gap-4">
-            <i class="fas fa-wifi"></i>
-            <i class="fas fa-volume-up"></i>
-            <i class="fas fa-battery-full"></i>
-            <i class="fas fa-power-off"></i>
-        </div>
+      </div>
+    </section>
+
+    <!-- Leaf 0: cover / profile -->
+    <div class="leaf" style="--i:0" data-leaf="0">
+      <div class="face front"><button class="cover" id="coverBtn" aria-label="Open the book">
+        <div><h1>Sina Yousefzadeh</h1><p>Full-stack Django developer</p></div>
+        <svg viewBox="0 0 200 200" aria-hidden="true"><path d="M20 200V90a80 80 0 0 1 160 0v110z" fill="#E2A72E"/><path d="M45 200V95a55 55 0 0 1 110 0v105z" fill="#12808A"/><path d="M70 200v-92a30 30 0 0 1 60 0v92z" fill="#FBFAF6"/></svg>
+        <span class="open">Open the book</span>
+      </button></div>
+      <div class="face back"><div class="pg">
+        <!-- EDIT: replace initials with your photo: <img src="..." alt="Sina"> -->
+        <div class="avatar" aria-hidden="true">SY</div>
+        <h2>Sina Yousefzadeh</h2>
+        <p class="soft">Freelance developer. I take on client projects from brief to launch.</p>
+        <div><a class="btn main" href="#p3" data-go="3">Start a project</a></div>
+      </div></div>
     </div>
 
-    <div class="launcher fixed left-0 top-[28px] flex flex-col pt-2">
-        <div class="launcher-item" onclick="openWindow('about-window')" title="About Me">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Android_O_Preview_Icon.png" class="w-8 h-8" alt="Profile">
+    <!-- Leaf 1: About / skills -->
+    <div class="leaf" style="--i:1" data-leaf="1">
+      <div class="face front"><div class="pg">
+        <h2>About</h2>
+        <div class="scroll">
+          <p>I'm a full-stack developer who builds with Django and Python. Clients bring me a business that runs a particular way, and I build the system around it instead of bending an off-the-shelf tool to fit.</p>
+          <p>I care about pages that work on every screen, documents that print cleanly, and interfaces that respond to what people do.</p>
+          <!-- EDIT: add a paragraph about your experience -->
+          <p class="soft">Add a short line here about years of experience or industries you've worked in.</p>
         </div>
-        <div class="launcher-item" onclick="openWindow('projects-window')" title="Projects">
-            <i class="fas fa-folder-open text-orange-400 text-2xl"></i>
+      </div></div>
+      <div class="face back"><div class="pg">
+        <h2>Skills</h2>
+        <div class="scroll">
+          <h3>Backend</h3>
+          <ul class="tags"><li>Python</li><li>Django</li><li>Django REST Framework</li></ul>
+          <h3>Frontend</h3>
+          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsive design</li></ul>
+          <h3>Motion</h3>
+          <ul class="tags"><li>SVG morphing</li><li>CSS transitions</li><li>Lottie</li></ul>
+          <h3>Delivery</h3>
+          <ul class="tags"><li>GitHub Pages</li><li>Cloudflare</li></ul>
         </div>
-        <div class="launcher-item" onclick="openWindow('skills-window')" title="Skills">
-            <i class="fas fa-cog text-gray-300 text-2xl"></i>
-        </div>
-        <div class="launcher-item" onclick="openWindow('terminal-window')" title="Terminal">
-            <i class="fas fa-terminal text-white text-2xl"></i>
-        </div>
-        <div class="launcher-item" onclick="openWindow('contact-window')" title="Contact">
-            <i class="fas fa-envelope text-red-400 text-2xl"></i>
-        </div>
-        <div class="mt-auto mb-4 launcher-item">
-            <i class="fas fa-th text-white text-xl"></i>
-        </div>
+      </div></div>
     </div>
 
-    
-    <!-- About Window -->
-    <div id="about-window" class="window" style="width: 600px; height: 450px; top: 100px; left: 150px;">
-        <div class="window-header">
-            <span class="text-sm font-medium">About Sina Yousefzadeh</span>
-            <div class="window-controls">
-                <div class="control-btn btn-min"><i class="fas fa-minus"></i></div>
-                <div class="control-btn btn-max"><i class="fas fa-expand-alt"></i></div>
-                <div class="control-btn btn-close" onclick="closeWindow('about-window')"><i class="fas fa-times"></i></div>
-            </div>
+    <!-- Leaf 2: Works / process -->
+    <div class="leaf" style="--i:2" data-leaf="2">
+      <div class="face front"><div class="pg">
+        <h2>Works</h2>
+        <div class="scroll">
+          <!-- EDIT: one .work block per project. --c sets the accent color -->
+          <div class="work" style="--c:#27479E"><h3>Business application</h3><p>A custom system built around one client's workflow. Add the result here.</p></div>
+          <div class="work" style="--c:#E2A72E"><h3>Print-document generator</h3><p>Django templates that turn records into clean, print-ready documents.</p></div>
+          <div class="work" style="--c:#12808A"><h3>Custom web platform</h3><p>Django and DRF backend with a responsive frontend. Add a live link.</p></div>
+          <div class="work" style="--c:#94294B"><h3>Interaction demos</h3><p>A character that covers its eyes when you focus a password field, built with SVG morphing, CSS transitions and Lottie.</p></div>
+          <div class="work" style="--c:#3E6B45"><h3>Personal site</h3><p>Hosted on GitHub Pages with Cloudflare caching.</p></div>
         </div>
-        <div class="window-content flex flex-col md:flex-row gap-6">
-            <div class="flex-shrink-0 flex flex-col items-center">
-                <img src="https://placehold.co/150x150/772953/white?text=Sina" class="rounded-full shadow-lg border-4 border-orange-500 mb-4" alt="Sina Photo">
-                <h2 class="text-xl font-bold">Sina Yousefzadeh</h2>
-                <p class="text-gray-500 italic">Creative Designer</p>
-            </div>
-            <div>
-                <h3 class="text-2xl font-bold border-b-2 border-orange-500 inline-block mb-4">Hello World!</h3>
-                <p class="leading-relaxed mb-4">
-                    I am a passionate designer and developer based in the digital realm. I specialize in creating intuitive user experiences with a focus on clean aesthetics and functional simplicity.
-                </p>
-                <p class="leading-relaxed">
-                    Just like Ubuntu, I believe in being open-source, collaborative, and constantly evolving. My goal is to build interfaces that empower users and solve complex problems elegantly.
-                </p>
-            </div>
+      </div></div>
+      <div class="face back"><div class="pg">
+        <h2>How a project runs</h2>
+        <div class="scroll">
+          <div class="step"><b>1</b><div><h3>Brief</h3><p class="soft">You describe the business and what the system must do.</p></div></div>
+          <div class="step"><b>2</b><div><h3>Proposal</h3><p class="soft">I send a scope, a price and a timeline.</p></div></div>
+          <div class="step"><b>3</b><div><h3>Build</h3><p class="soft">You see working pieces as they land.</p></div></div>
+          <div class="step"><b>4</b><div><h3>Launch</h3><p class="soft">I deploy it and hand over what you need to run it.</p></div></div>
         </div>
+      </div></div>
     </div>
+  </div>
+</div>
 
-    <!-- Projects Window -->
-    <div id="projects-window" class="window" style="width: 700px; height: 500px; top: 150px; left: 200px;">
-        <div class="window-header">
-            <span class="text-sm font-medium">Files - /home/sina/projects</span>
-            <div class="window-controls">
-                <div class="control-btn btn-min"><i class="fas fa-minus"></i></div>
-                <div class="control-btn btn-max"><i class="fas fa-expand-alt"></i></div>
-                <div class="control-btn btn-close" onclick="closeWindow('projects-window')"><i class="fas fa-times"></i></div>
-            </div>
-        </div>
-        <div class="window-content bg-gray-50 p-0">
-            <div class="flex h-full">
-                <div class="w-40 bg-gray-200 p-4 hidden md:block">
-                    <ul class="text-sm space-y-2 text-gray-700">
-                        <li class="font-bold text-orange-600"><i class="fas fa-folder mr-2"></i> Recent</li>
-                        <li><i class="fas fa-star mr-2"></i> Starred</li>
-                        <li><i class="fas fa-home mr-2"></i> Home</li>
-                        <li><i class="fas fa-desktop mr-2"></i> Desktop</li>
-                    </ul>
-                </div>
-                <div class="flex-grow p-6 grid grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="grid-item flex flex-col items-center p-4 bg-white rounded-lg shadow-sm cursor-pointer border border-transparent hover:border-orange-500">
-                        <i class="fas fa-folder text-orange-400 text-5xl mb-2"></i>
-                        <span class="text-sm font-medium text-center">E-Commerce Redesign</span>
-                    </div>
-                    <div class="grid-item flex flex-col items-center p-4 bg-white rounded-lg shadow-sm cursor-pointer border border-transparent hover:border-orange-500">
-                        <i class="fas fa-file-code text-blue-400 text-5xl mb-2"></i>
-                        <span class="text-sm font-medium text-center">AI Chat App</span>
-                    </div>
-                    <div class="grid-item flex flex-col items-center p-4 bg-white rounded-lg shadow-sm cursor-pointer border border-transparent hover:border-orange-500">
-                        <i class="fas fa-palette text-pink-400 text-5xl mb-2"></i>
-                        <span class="text-sm font-medium text-center">Brand Identity</span>
-                    </div>
-                    <div class="grid-item flex flex-col items-center p-4 bg-white rounded-lg shadow-sm cursor-pointer border border-transparent hover:border-orange-500">
-                        <i class="fas fa-mobile-alt text-green-400 text-5xl mb-2"></i>
-                        <span class="text-sm font-medium text-center">Fitness Tracker</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<nav aria-label="Book pages">
+  <button data-go="0">Cover</button><button data-go="1">About</button><button data-go="2">Works</button><button data-go="3">Contact</button>
+</nav>
 
-    <!-- Skills Window -->
-    <div id="skills-window" class="window" style="width: 500px; height: 400px; top: 120px; left: 250px;">
-        <div class="window-header">
-            <span class="text-sm font-medium">Settings - Professional Skills</span>
-            <div class="window-controls">
-                <div class="control-btn btn-min"><i class="fas fa-minus"></i></div>
-                <div class="control-btn btn-max"><i class="fas fa-expand-alt"></i></div>
-                <div class="control-btn btn-close" onclick="closeWindow('skills-window')"><i class="fas fa-times"></i></div>
-            </div>
-        </div>
-        <div class="window-content">
-            <div class="space-y-6">
-                <div>
-                    <div class="flex justify-between mb-1">
-                        <span class="font-medium">UI/UX Design</span>
-                        <span class="text-sm text-gray-500">95%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-orange-600 h-2.5 rounded-full" style="width: 95%"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between mb-1">
-                        <span class="font-medium">Frontend Development</span>
-                        <span class="text-sm text-gray-500">85%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-orange-600 h-2.5 rounded-full" style="width: 85%"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between mb-1">
-                        <span class="font-medium">Visual Branding</span>
-                        <span class="text-sm text-gray-500">90%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-orange-600 h-2.5 rounded-full" style="width: 90%"></div>
-                    </div>
-                </div>
-                <div class="flex flex-wrap gap-2 mt-4">
-                    <span class="bg-gray-200 px-3 py-1 rounded-full text-xs font-bold">FIGMA</span>
-                    <span class="bg-gray-200 px-3 py-1 rounded-full text-xs font-bold">ADOBE XD</span>
-                    <span class="bg-gray-200 px-3 py-1 rounded-full text-xs font-bold">TAILWIND</span>
-                    <span class="bg-gray-200 px-3 py-1 rounded-full text-xs font-bold">REACT</span>
-                    <span class="bg-gray-200 px-3 py-1 rounded-full text-xs font-bold">UX RESEARCH</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Terminal Window -->
-    <div id="terminal-window" class="window" style="width: 600px; height: 350px; top: 250px; left: 300px;">
-        <div class="window-header">
-            <span class="text-sm font-medium">sina@ubuntu: ~</span>
-            <div class="window-controls">
-                <div class="control-btn btn-min"><i class="fas fa-minus"></i></div>
-                <div class="control-btn btn-max"><i class="fas fa-expand-alt"></i></div>
-                <div class="control-btn btn-close" onclick="closeWindow('terminal-window')"><i class="fas fa-times"></i></div>
-            </div>
-        </div>
-        <div class="window-content terminal-content p-4 text-sm">
-            <p><span class="text-green-400 font-bold">sina@ubuntu</span>:<span class="text-blue-400">~</span>$ whoami</p>
-            <p class="mb-2">Sina Yousefzadeh - Creative Designer & UI Enthusiast</p>
-            <p><span class="text-green-400 font-bold">sina@ubuntu</span>:<span class="text-blue-400">~</span>$ cat goals.txt</p>
-            <p class="mb-2">1. Build meaningful digital experiences<br>2. Bridge the gap between design and tech<br>3. Continuous learning and growth</p>
-            <p><span class="text-green-400 font-bold">sina@ubuntu</span>:<span class="text-blue-400">~</span>$ <span class="cursor"></span></p>
-        </div>
-    </div>
-
-    <!-- Contact Window -->
-    <div id="contact-window" class="window" style="width: 450px; height: 380px; top: 200px; left: 400px;">
-        <div class="window-header">
-            <span class="text-sm font-medium">Contact Sina</span>
-            <div class="window-controls">
-                <div class="control-btn btn-min"><i class="fas fa-minus"></i></div>
-                <div class="control-btn btn-max"><i class="fas fa-expand-alt"></i></div>
-                <div class="control-btn btn-close" onclick="closeWindow('contact-window')"><i class="fas fa-times"></i></div>
-            </div>
-        </div>
-        <div class="window-content">
-            <div class="space-y-4">
-                <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
-                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-600">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-500 uppercase font-bold">Email</p>
-                        <p class="font-medium">sina@example.com</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
-                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
-                        <i class="fab fa-linkedin"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-500 uppercase font-bold">LinkedIn</p>
-                        <p class="font-medium">linkedin.com/in/sina-yousefzadeh</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
-                    <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white">
-                        <i class="fab fa-github"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-500 uppercase font-bold">GitHub</p>
-                        <p class="font-medium">github.com/sina-y</p>
-                    </div>
-                </div>
-                <button class="w-full bg-orange-600 text-white py-3 rounded-lg font-bold hover:bg-orange-700 transition">
-                    Send Message
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function openWindow(id) {
-            const win = document.getElementById(id);
-            // Deactivate others
-            document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
-            
-            // Activate target
-            win.classList.add('active');
-            
-            // Update launcher markers
-            document.querySelectorAll('.launcher-item').forEach(item => item.classList.remove('active'));
-            // Note: In a real app we'd map ID to launcher index
-        }
-
-        function closeWindow(id) {
-            document.getElementById(id).classList.remove('active');
-        }
-
-        function updateClock() {
-            const now = new Date();
-            const options = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
-            document.getElementById('clock').innerText = now.toLocaleString('en-US', options).replace(',', '');
-        }
-
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        document.querySelectorAll('.window').forEach(win => {
-            const header = win.querySelector('.window-header');
-            let isDragging = false;
-            let offset = { x: 0, y: 0 };
-
-            header.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                offset.x = e.clientX - win.offsetLeft;
-                offset.y = e.clientY - win.offsetTop;
-                // Bring to front
-                document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
-                win.classList.add('active');
-            });
-
-            document.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                win.style.left = (e.clientX - offset.x) + 'px';
-                win.style.top = (e.clientY - offset.y) + 'px';
-            });
-
-            document.addEventListener('mouseup', () => {
-                isDragging = false;
-            });
-            
-            // Touch support
-            header.addEventListener('touchstart', (e) => {
-                isDragging = true;
-                const touch = e.touches[0];
-                offset.x = touch.clientX - win.offsetLeft;
-                offset.y = touch.clientY - win.offsetTop;
-                document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
-                win.classList.add('active');
-            });
-
-            document.addEventListener('touchmove', (e) => {
-                if (!isDragging) return;
-                const touch = e.touches[0];
-                win.style.left = (touch.clientX - offset.x) + 'px';
-                win.style.top = (touch.clientY - offset.y) + 'px';
-            });
-
-            document.addEventListener('touchend', () => {
-                isDragging = false;
-            });
-        });
-
-        window.onload = () => {
-            setTimeout(() => {
-                openWindow('about-window');
-            }, 500);
-        };
-    </script>
+<script>
+const book = document.getElementById('book');
+const leaves = [...document.querySelectorAll('.leaf')];
+const base = document.getElementById('p3');
+const btns = [...document.querySelectorAll('nav button')];
+let n = 0;
+function show(k){
+  n = Math.max(0, Math.min(3, k));
+  book.dataset.n = n;
+  leaves.forEach((l,i)=>{
+    l.classList.toggle('flipped', i < n);
+    l.querySelector('.front').inert = (i !== n);
+    l.querySelector('.back').inert = (i !== n-1);
+  });
+  base.inert = (n !== 3);
+  btns.forEach((b,i)=>b.setAttribute('aria-current', i===n));
+}
+document.addEventListener('click', e=>{
+  const go = e.target.closest('[data-go]');
+  if(go){ e.preventDefault(); show(+go.dataset.go); }
+});
+document.getElementById('coverBtn').addEventListener('click', ()=>show(1));
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight') show(n+1);
+  if(e.key==='ArrowLeft') show(n-1);
+});
+show(0);
+</script>
 </body>
 </html>
