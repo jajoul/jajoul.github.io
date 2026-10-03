@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jajoul.github.io/sitemap.xml
