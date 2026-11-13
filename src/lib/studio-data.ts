@@ -64,12 +64,12 @@ export const CANON: PieceLayout[] = [
 ];
 
 export const DEFAULT_PROFILE: Profile = {
-  name: "Nord & Stack",
+  name: "Jajoul",
   discipline: "Django & Python",
   place: "Full-stack",
-  email: "hello@nordandstack.studio",
-  github: "https://github.com/nordandstack",
-  linkedin: "https://www.linkedin.com/in/nordandstack",
+  email: "jajoul.me@gmail.com",
+  github: "https://github.com/jajoul",
+  linkedin: "https://www.linkedin.com/in/jajoul",
   polaroidCaption: "install week, may '24",
   posterKicker: "Ledgerline · Django REST",
   posterDate: "07/12",

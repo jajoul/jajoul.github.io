@@ -204,7 +204,6 @@ export function ContactPanel({ profile }: { profile: Profile }) {
           </li>
         ))}
       </ul>
-      <p className="quiet">No form. A static card, so the page can live on GitHub Pages.</p>
     </div>
   );
 }
